@@ -49,6 +49,7 @@ public class Streamstatus extends JavaPlugin implements Listener, CommandExecuto
             sender.sendMessage("Only players can use this command.");
             return true;
         }
+
         Player player = (Player) sender;
         Set<UUID> targetSet;
         String type;
@@ -63,31 +64,43 @@ public class Streamstatus extends JavaPlugin implements Listener, CommandExecuto
             return false;
         }
 
-        if (args.length != 1) {
-            player.sendMessage("Usage: /" + label + " <on|off>");
+        // Toggle if no args
+        if (args.length == 0) {
+            boolean nowActive = !targetSet.contains(player.getUniqueId());
+            if (nowActive) {
+                targetSet.add(player.getUniqueId());
+                Bukkit.broadcastMessage("⚠ " + player.getName() + " is now " + type + "!");
+                updateTabList(player, true, type.equals("streaming") ? "LIVE" : "REC");
+            } else {
+                targetSet.remove(player.getUniqueId());
+                Bukkit.broadcastMessage("ℹ " + player.getName() + " has stopped " + type + ".");
+                updateTabList(player, false, "");
+            }
             return true;
         }
 
+        // Still support "on" or "off"
         String action = args[0].toLowerCase();
         if (action.equals("on")) {
             if (targetSet.add(player.getUniqueId())) {
                 Bukkit.broadcastMessage("⚠ " + player.getName() + " is now " + type + "!");
-                updateTabList(player, true);
+                updateTabList(player, true, type.equals("streaming") ? "LIVE" : "REC");
             } else {
                 player.sendMessage("You are already " + type + "!");
             }
         } else if (action.equals("off")) {
             if (targetSet.remove(player.getUniqueId())) {
                 Bukkit.broadcastMessage("ℹ " + player.getName() + " has stopped " + type + ".");
-                updateTabList(player, false);
+                updateTabList(player, false, "");
             } else {
                 player.sendMessage("You are not currently " + type + ".");
             }
         } else {
-            player.sendMessage("Usage: /" + label + " <on|off>");
+            player.sendMessage("Usage: /" + label + " [on|off]");
         }
         return true;
     }
+
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
@@ -103,9 +116,9 @@ public class Streamstatus extends JavaPlugin implements Listener, CommandExecuto
     }
 
     // Adds or removes [LIVE] tag in the tab list prefix
-    private void updateTabList(Player player, boolean add) {
+    private void updateTabList(Player player, boolean add, String text) {
         if (add) {
-            player.setPlayerListName(ChatColor.RED + "[LIVE] " + ChatColor.RESET + player.getName());
+            player.setPlayerListName(ChatColor.RED + "[" + text + "] " + ChatColor.RESET + player.getName());
         } else {
             player.setPlayerListName(player.getName());
         }
