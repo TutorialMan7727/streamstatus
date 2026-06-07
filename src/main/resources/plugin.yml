@@ -1,10 +1,10 @@
 name: streamstatus
-version: '1.1'
+version: "1.1"
 main: uk.vrtxx.streamstatus.Streamstatus
-api-version: '1.21'
-authors: [ TutorialMan7727 ]
+api-version: "26.1.2"
+authors: [TutorialMan7727]
 description: Allows users to show if they are streaming/recording
-website: https://vrtx.uk
+website: https://vrtxx.uk
 commands:
   streaming:
     description: Toggle your streaming status
