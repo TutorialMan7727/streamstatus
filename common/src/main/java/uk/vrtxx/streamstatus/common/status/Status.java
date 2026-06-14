@@ -1,10 +1,9 @@
-package uk.vrtxx.streamstatus.status;
+package uk.vrtxx.streamstatus.common.status;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 
 public enum Status {
-
     STREAMING("streaming", "▶", NamedTextColor.GOLD, "streaming"),
     RECORDING("recording", "⏺", NamedTextColor.RED, "recording");
 
