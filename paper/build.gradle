@@ -6,12 +6,12 @@ plugins {
 dependencies {
     implementation project(":common")
 
-    compileOnly("io.papermc.paper:paper-api:26.1.2.build.+")
+    compileOnly("io.papermc.paper:paper-api:26.2.build.+")
 }
 
 tasks {
     runServer {
-        minecraftVersion("26.1.2")
+        minecraftVersion("26.2")
     }
 
     build {
