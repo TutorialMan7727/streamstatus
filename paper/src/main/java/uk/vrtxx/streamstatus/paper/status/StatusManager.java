@@ -10,7 +10,7 @@ import uk.vrtxx.streamstatus.common.status.*;
 
 public class StatusManager {
 
-    private static final long REMINDER_PERIOD_TICKS = 20L * 60L * 5L;
+    private static final long REMINDER_PERIOD_TICKS = 20L * 60L * 30L;
 
     private final JavaPlugin plugin;
     private final StatusStore store;
